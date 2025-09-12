@@ -4,30 +4,93 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style></style>
+    <style>
+      .car-rental-widget {
+        border: 0.0625rem solid #ccc;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        max-width: 12rem;
+        font-family: Arial, sans-serif;
+      }
+
+      .car-rental-widget__container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .car-rental-widget__location,
+      .car-rental-widget__pickup,
+      .car-rental-widget__dropoff {
+        display: flex;
+        flex-direction: column;
+        /* margin-bottom: 1rem; */
+      }
+    </style>
   </head>
   <body>
-    <form action="">
-      <h2>Car Rental</h2>
-      <div class="">
-        <label for="location">Location</label>
-        <input type="text" name="location" placeholder="Location" />
-      </div>
-      <div class="car-rental__pickup">
-        <h3>Pick up</h3>
-        <label for="pickup-date">Date:</label>
-        <input type="date" name="pickup-date" />
-        <label for="pickup-time">Time:</label>
-        <input type="time" name="pickup-time" />
-      </div>
-      <div class="">
-        <h3>Drop off</h3>
-        <label for="dropoff-date">Date:</label>
-        <input type="date" name="dropoff-date" />
-        <label for="dropoff-time">Time:</label>
-        <input type="time" name="dropoff-time" />
-      </div>
-    </form>
+    <div class="car-rental-widget">
+      <form action="">
+        <div class="car-rental-widget__container">
+          <h3>Car Rental</h3>
+          <div class="car-rental-widget__location">
+            <label for="location" class="car-rental-widget__location-label"
+              >Location</label
+            >
+            <input
+              type="text"
+              name="location"
+              placeholder="Location"
+              class="car-rental-widget__location-input"
+            />
+          </div>
+          <div class="car-rental-widget__pickup">
+            <label
+              for="pickup-date"
+              class="car-rental-widget__pickup-date-label"
+              >Pick-up Date:</label
+            >
+            <input
+              type="date"
+              name="pickup-date"
+              class="car-rental-widget__pickup-date-input"
+            />
+            <label
+              for="pickup-time"
+              class="car-rental-widget__pickup-time-label"
+              >Pick-up Time:</label
+            >
+            <input
+              type="time"
+              name="pickup-time"
+              class="car-rental-widget__pickup-time-input"
+            />
+          </div>
+          <div class="car-rental-widget__dropoff">
+            <label
+              for="dropoff-date"
+              class="car-rental-widget__dropoff-date-label"
+              >Drop-off Date:</label
+            >
+            <input
+              type="date"
+              name="dropoff-date"
+              class="car-rental-widget__dropoff-date-input"
+            />
+            <label
+              for="dropoff-time"
+              class="car-rental-widget__dropoff-time-label"
+              >Drop-off Time:</label
+            >
+            <input
+              type="time"
+              name="dropoff-time"
+              class="car-rental-widget__dropoff-time-input"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
   </body>
   <script>
     const dateInput = document.querySelector('input[name="pickup-date"]');
