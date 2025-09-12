@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style></style>
+  </head>
+  <body>
+    <form action="">
+      <h2>Car Rental</h2>
+      <div class="">
+        <label for="location">Location</label>
+        <input type="text" name="location" placeholder="Location" />
+      </div>
+      <div class="car-rental__pickup">
+        <h3>Pick up</h3>
+        <label for="pickup-date">Date:</label>
+        <input type="date" name="pickup-date" />
+        <label for="pickup-time">Time:</label>
+        <input type="time" name="pickup-time" />
+      </div>
+      <div class="">
+        <h3>Drop off</h3>
+        <label for="dropoff-date">Date:</label>
+        <input type="date" name="dropoff-date" />
+        <label for="dropoff-time">Time:</label>
+        <input type="time" name="dropoff-time" />
+      </div>
+    </form>
+  </body>
+  <script>
+    const dateInput = document.querySelector('input[name="pickup-date"]');
+
+    if (dateInput) {
+      dateInput.addEventListener("change", (event) => {
+        const selectedDate = event.target.value;
+        console.log("Selected date:", selectedDate);
+      });
+    }
+  </script>
+</html>
