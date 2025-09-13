@@ -114,13 +114,100 @@
     </div>
   </body>
   <script>
-    const dateInput = document.querySelector('input[name="pickup-date"]');
+    // Initialize when DOM is ready
+    /* if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', autoInit);
+    } else {
+        autoInit();
+    } */
 
-    if (dateInput) {
-      dateInput.addEventListener("change", (event) => {
-        const selectedDate = event.target.value;
-        console.log("Selected date:", selectedDate);
-      });
-    }
+    document.addEventListener("DOMContentLoaded", () => {
+      function handleSearch(event) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        console.log("Form Data:", formData);
+
+        // Remove previous error messages
+        const oldError = document.querySelector(".car-rental-widget__error");
+        if (oldError) oldError.remove();
+
+        [
+          "location",
+          "pickup-date",
+          "pickup-time",
+          "dropoff-date",
+          "dropoff-time",
+        ].forEach((name) => {
+          const input = event.target.querySelector(`[name="${name}"]`);
+          if (input) input.style.borderColor = "";
+        });
+
+        // Simple validation
+        const location = formData.get("location").trim();
+        const pickupDate = formData.get("pickup-date").trim();
+        const pickupTime = formData.get("pickup-time").trim();
+        const dropoffDate = formData.get("dropoff-date").trim();
+        const dropoffTime = formData.get("dropoff-time").trim();
+
+        const formValues = {
+          location,
+          pickupDate,
+          pickupTime,
+          dropoffDate,
+          dropoffTime,
+        };
+
+        const errors = Object.entries(formValues)
+          .map(([key, value]) =>
+            !value
+              ? `Please enter a ${key
+                  .replace(/([A-Z])/g, " $1")
+                  .toLowerCase()}.` // Insert a space before each uppercase letter
+              : null
+          )
+          .filter(Boolean); // Remove null values
+
+        Object.entries(formValues).forEach(([key, value]) => {
+          console.log("[key, value]", [key, value]);
+          const input = event.target.querySelector(`[name="${key}"]`);
+          console.log("input for", key, input);
+          if (input) input.style.borderColor = value ? "" : "red";
+        });
+
+        if (errors.length > 0) {
+          const errorDiv = document.createElement("div");
+          errorDiv.className = "car-rental-widget__error";
+          errorDiv.style.color = "red";
+          errorDiv.style.fontSize = "0.85rem";
+          errorDiv.style.marginTop = "0.5rem";
+          errorDiv.innerHTML = errors.join("<br/>");
+
+          event.target
+            .querySelector(".car-rental-widget__container")
+            .appendChild(errorDiv);
+
+          return;
+        }
+
+        // Build the URL with parameters
+        const params = new URLSearchParams({
+          locid: location,
+          pdate: pickupDate,
+          ddate: dropoffDate,
+          dtime: dropoffTime,
+          ptime: pickupTime,
+        });
+
+        // Redirect to the results page with parameters
+        // window.location.href = `/results.html?${params.toString()}`;
+      }
+
+      // Listen to form submit event
+      const form = document.querySelector(".car-rental-widget form");
+      if (form) {
+        form.addEventListener("submit", handleSearch);
+      }
+    });
   </script>
 </html>
