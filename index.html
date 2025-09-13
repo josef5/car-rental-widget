@@ -126,22 +126,16 @@
         event.preventDefault();
 
         const formData = new FormData(event.target);
-        console.log("Form Data:", formData);
+
+        // Highlight empty fields
+        const inputs = event.target.querySelectorAll("input");
+        inputs.forEach(
+          (input) => (input.style.borderColor = input.value ? "" : "red")
+        );
 
         // Remove previous error messages
         const oldError = document.querySelector(".car-rental-widget__error");
         if (oldError) oldError.remove();
-
-        [
-          "location",
-          "pickup-date",
-          "pickup-time",
-          "dropoff-date",
-          "dropoff-time",
-        ].forEach((name) => {
-          const input = event.target.querySelector(`[name="${name}"]`);
-          if (input) input.style.borderColor = "";
-        });
 
         // Simple validation
         const location = formData.get("location").trim();
@@ -163,17 +157,10 @@
             !value
               ? `Please enter a ${key
                   .replace(/([A-Z])/g, " $1")
-                  .toLowerCase()}.` // Insert a space before each uppercase letter
+                  .toLowerCase()}.` // Insert a space before each uppercase letter and convert to lowercase
               : null
           )
           .filter(Boolean); // Remove null values
-
-        Object.entries(formValues).forEach(([key, value]) => {
-          console.log("[key, value]", [key, value]);
-          const input = event.target.querySelector(`[name="${key}"]`);
-          console.log("input for", key, input);
-          if (input) input.style.borderColor = value ? "" : "red";
-        });
 
         if (errors.length > 0) {
           const errorDiv = document.createElement("div");
