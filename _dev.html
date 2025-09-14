@@ -203,9 +203,14 @@
         return;
       }
 
+      const locid =
+        locations.find((loc) =>
+          loc.Name.toLowerCase().includes(location.toLowerCase())
+        )?.code ?? location;
+
       // Build the URL with parameters
       const params = new URLSearchParams({
-        locid: location,
+        locid: locid,
         pdate: pickupDate,
         ddate: dropoffDate,
         dtime: dropoffTime,

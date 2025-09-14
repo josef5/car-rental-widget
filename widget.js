@@ -121,6 +121,29 @@
     padding: 0.25rem;
   }`;
 
+  const locations = [
+    {
+      id: 1,
+      code: "LGW",
+      Name: "London Gatwick Airport",
+    },
+    {
+      id: 2,
+      code: "FAO",
+      Name: "Faro Airport",
+    },
+    {
+      id: 3,
+      code: "LIS",
+      Name: "Lisbon Airport",
+    },
+    {
+      id: 4,
+      code: "FCO",
+      Name: "Fiumicino Airport",
+    },
+  ];
+
   function handleSearch(event) {
     event.preventDefault();
 
@@ -174,9 +197,14 @@
       return;
     }
 
+    const locid =
+      locations.find((loc) =>
+        loc.Name.toLowerCase().includes(location.toLowerCase())
+      )?.code ?? location;
+
     // Build the URL with parameters
     const params = new URLSearchParams({
-      locid: location,
+      locid,
       pdate: pickupDate,
       ddate: dropoffDate,
       dtime: dropoffTime,
