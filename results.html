@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Results</title>
+  </head>
+  <body>
+    <h1>Car Rental Search Results</h1>
+    <div id="results"></div>
+  </body>
+</html>
+  <script>
+    function init() {
+      const params = new URLSearchParams(window.location.search);
+      const location = params.get("locid");
+      const pickupDate = params.get("pdate");
+      const dropoffDate = params.get("ddate");
+      const pickupTime = params.get("ptime");
+      const dropoffTime = params.get("dtime");
+
+      const resultsDiv = document.getElementById("results");
+      if (resultsDiv) {
+        resultsDiv.innerHTML = `
+          <p><strong>Location:</strong> ${location || "N/A"}</p>
+          <p><strong>Pickup Date:</strong> ${pickupDate || "N/A"}</p>
+          <p><strong>Drop-off Date:</strong> ${dropoffDate || "N/A"}</p>
+          <p><strong>Pickup Time:</strong> ${pickupTime || "N/A"}</p>
+          <p><strong>Drop-off Time:</strong> ${dropoffTime || "N/A"}</p>
+        `;
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  </script>
+</html>
