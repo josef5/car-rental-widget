@@ -79,16 +79,18 @@
     border-radius: 0.5rem;
     max-width: 12rem;
     font-family: Arial, sans-serif;
+    background-color: white;
 
     & h3 {
-      margin-block: 0.5rem;
+      margin-block: 0;
+      font-size: 1rem;
     }
   }
 
   .car-rental-widget__container {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.25rem;
   }
 
   .car-rental-widget__location,
@@ -97,15 +99,26 @@
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
-    font-size: 0.875rem;
+    font-size: 0.7rem;
   }
 
   .car-rental-widget__submit-button {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
+    background-color: hsl(30 100% 50% / 1);
+    border: none;
+    border-radius: 0.25rem;
+    height: 2rem;
+    color: white;
   }
 
   [class$="-label"] {
     margin-top: 0.5rem;
+  }
+
+  [class$="-input"] {
+    border: solid 0.0625rem #ccc;
+    border-radius: 0.2rem;
+    padding: 0.25rem;
   }`;
 
   function handleSearch(event) {
