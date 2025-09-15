@@ -187,6 +187,43 @@
       },
     ];
 
+    function handleLocationInput(event) {
+      const input = event.target;
+      const inputText = input.value.toLowerCase();
+
+      const suggestionsBox = document.querySelector(
+        ".car-rental-widget__location-suggestions"
+      );
+
+      if (!suggestionsBox) return;
+
+      suggestionsBox.innerHTML = "";
+
+      const matchedLocations = locations.filter((loc) =>
+        loc.Name.toLowerCase().includes(inputText)
+      );
+
+      if (matchedLocations.length === 0 || inputText === "") {
+        suggestionsBox.style.display = "none";
+        return;
+      }
+
+      matchedLocations.forEach((loc) => {
+        const div = document.createElement("div");
+        div.className = "car-rental-widget__location-suggestion";
+        div.textContent = loc.Name;
+
+        div.addEventListener("click", () => {
+          input.value = loc.Name;
+          suggestionsBox.style.display = "none";
+        });
+
+        suggestionsBox.appendChild(div);
+      });
+
+      suggestionsBox.style.display = "flex";
+    }
+
     function handleSearch(event) {
       event.preventDefault();
 
@@ -241,8 +278,8 @@
       }
 
       const locid =
-        locations.find((loc) =>
-          loc.Name.toLowerCase().includes(location.toLowerCase())
+        locations.find(
+          (loc) => loc.Name.toLowerCase() === location.toLowerCase()
         )?.code ?? location;
 
       // Build the URL with parameters
@@ -258,7 +295,16 @@
       window.location.href = `/results.html?${params.toString()}`;
     }
 
-    function autoInit() {
+    function init() {
+      const locationInput = document.querySelector(
+        ".car-rental-widget__location-input"
+      );
+
+      if (!locationInput) return;
+
+      // Listen to location input changes
+      locationInput.addEventListener("input", handleLocationInput);
+
       // Listen to form submit event
       const form = document.querySelector(".car-rental-widget form");
       if (form) {
@@ -268,9 +314,9 @@
 
     // Initialize when DOM is ready
     if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", autoInit);
+      document.addEventListener("DOMContentLoaded", init);
     } else {
-      autoInit();
+      init();
     }
   </script>
 </html>
