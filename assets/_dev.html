@@ -34,6 +34,30 @@
         font-size: 0.7rem;
       }
 
+      .car-rental-widget__location {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .car-rental-widget__location-suggestions {
+        top: 3.1rem;
+        position: absolute;
+        background-color: white;
+        max-height: 4rem;
+        overflow-y: auto;
+        width: 100%;
+        font-size: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding-inline: 0.25rem;
+        padding-block: 0.25rem;
+        box-sizing: border-box;
+        z-index: 10;
+        box-shadow: 0 0.125rem 0.25rem hsl(0 0% 0% / 0.5);
+      }
+
       .car-rental-widget__submit-button {
         margin-top: 0.5rem;
         background-color: hsl(30 100% 50% / 1);
@@ -70,6 +94,14 @@
               placeholder="Location"
               class="car-rental-widget__location-input"
             />
+            <div class="car-rental-widget__location-suggestions">
+              <div class="car-rental-widget__location-suggestion">
+                London Gatwick Airport
+              </div>
+              <div class="car-rental-widget__location-suggestion">
+                Faro Airport
+              </div>
+            </div>
           </div>
           <div class="car-rental-widget__pickup">
             <label
