@@ -15,6 +15,9 @@
             placeholder="Location"
             class="car-rental-widget__location-input"
           />
+          <div class="car-rental-widget__location-suggestions">
+            <!-- Content will be populated dynamically -->
+          </div>
         </div>
         <div class="car-rental-widget__pickup">
           <label
@@ -102,6 +105,39 @@
     font-size: 0.7rem;
   }
 
+  .car-rental-widget__location {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .car-rental-widget__location-suggestions {
+    top: 3.1rem;
+    position: absolute;
+    background-color: white;
+    overflow-y: auto;
+    width: 100%;
+    font-size: 0.75rem;
+    display: none;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-inline: 0.25rem;
+    padding-block: 0.25rem;
+    box-sizing: border-box;
+    z-index: 10;
+    box-shadow: 0 0.125rem 0.25rem hsl(0 0% 0% / 0.5);
+  }
+
+  .car-rental-widget__location-suggestion {
+    padding: 0.25rem;
+    border-radius: 0.1rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: hsl(30 100% 50% / 0.2);
+    }
+  }
+
   .car-rental-widget__submit-button {
     margin-top: 0.5rem;
     background-color: hsl(30 100% 50% / 1);
@@ -109,6 +145,7 @@
     border-radius: 0.25rem;
     height: 2rem;
     color: white;
+    cursor: pointer;
   }
 
   [class$="-label"] {
@@ -143,6 +180,43 @@
       Name: "Fiumicino Airport",
     },
   ];
+
+  function handleLocationInput(event) {
+    const input = event.target;
+    const inputText = input.value.toLowerCase();
+
+    const suggestionsBox = document.querySelector(
+      ".car-rental-widget__location-suggestions"
+    );
+
+    if (!suggestionsBox) return;
+
+    suggestionsBox.innerHTML = "";
+
+    const matchedLocations = locations.filter((loc) =>
+      loc.Name.toLowerCase().includes(inputText)
+    );
+
+    if (matchedLocations.length === 0 || inputText === "") {
+      suggestionsBox.style.display = "none";
+      return;
+    }
+
+    matchedLocations.forEach((loc) => {
+      const div = document.createElement("div");
+      div.className = "car-rental-widget__location-suggestion";
+      div.textContent = loc.Name;
+
+      div.addEventListener("click", () => {
+        input.value = loc.Name;
+        suggestionsBox.style.display = "none";
+      });
+
+      suggestionsBox.appendChild(div);
+    });
+
+    suggestionsBox.style.display = "flex";
+  }
 
   function handleSearch(event) {
     event.preventDefault();
@@ -198,9 +272,8 @@
     }
 
     const locid =
-      locations.find((loc) =>
-        loc.Name.toLowerCase().includes(location.toLowerCase())
-      )?.code ?? location;
+      locations.find((loc) => loc.Name.toLowerCase() === location.toLowerCase())
+        ?.code ?? location;
 
     // Build the URL with parameters
     const params = new URLSearchParams({
@@ -231,6 +304,14 @@
       injectStyles();
       container.innerHTML = html;
 
+      const locationInput = document.querySelector(
+        ".car-rental-widget__location-input"
+      );
+
+      // Listen to location input changes
+      locationInput.addEventListener("input", handleLocationInput);
+
+      // Listen to form submit event
       const form = container.querySelector("form");
       form.addEventListener("submit", handleSearch);
     }
